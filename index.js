@@ -1,45 +1,41 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const ejs = require('ejs');
 const listing = require('./models/listing.js');
+const path = require('path');
 
+// Set view engine and views directory
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-
-/// Database Connection
+// Database Connection
 const MONGOURL = "mongodb://127.0.0.1:27017/Wonderlust";
-
 main().then(() => console.log('Connected to database')).catch(err => console.error(err));
+
 async function main() {
     await mongoose.connect(MONGOURL);
-}   
+}
 
-
-
+// Routes
 app.get('/', (req, res) => {
-    res.send('Hii i am root');
+    res.send('Hii I am root');
 });
 
-app.get('/listingtest', async(req, res) => {
-   let listing1 = new listing({
-       title: "Test Title",
-       description: "Test Description",
-       price: 100,
-       location: "Test Location",
-       country: "Test Country",
-   });
-    await listing1.save();
-    console.log('Listing created');
-    console.log(listing1);
-    
-    
-    res.send(listing1);
+//// index route
+app.get('/listings', async (req, res) => {
+    try {
+        let listings = await listing.find({});
+        res.render('listings/index', { listings });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error fetching listings');
+    }
 });
 
+// Show route
 
 
-
-
+// Server listening
 app.listen(8080, () => {
-    console.log('Server is running on port 8000');
+    console.log('Server is running on port 8080');
 });
