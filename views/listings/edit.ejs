@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wonder Lust</title>
+</head>
+<body>
+    
+    <h2>Edit Listing</h2>
+    <form method="post" action="/listings/<%= listings.id %>?_method=PUT">
+        <input type="hidden" name="_method" value="put">
+        <label for="title">Title</label>
+        <input type="text" name="listing[title]" id="title" value="<%= listings.title %>" placeholder="Enter title">
+        <br><br>
+        <label for="image">Image</label>
+        <input type="text" name="listing[image]" id="image" value="<%= listings.image %>" placeholder="Enter the url of image">
+        <br><br>
+        <label for="location">Location</label>
+        <input type="text" name="listing[location]" id="location" value="<%= listings.location %>" placeholder="Enter the Location">
+        <br><br>
+        <label for="country">country</label>
+        <input type="text" name="listing[country]" id="country" value="<%= listings.country %>" placeholder="Enter the country">
+        <br><br>
+        <label for="price">Price</label>
+        <input type="number" name="listing[price]" id="price" value="<%= listings.price %>" placeholder="Enter the price">
+        <br><br>
+        <label for="description">Description</label>
+        <textarea name="listing[description]" id="description" cols="30" rows="10" placeholder="Enter the Description"><%= listings.description %></textarea>
+        <br><br>
+        <button type="submit">Edit Listing</button>
+    </form>
+</body>
+</html>

@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wonder Lust</title>
-</head>
+<% layout('layouts/boilerplates') %>
 <body>
-    
-    <h1>Wonder Lust</h1>
     <h2>Listing</h2>
-    <a href="/listings/new">Add Listing</a>
+    <!-- <form action="/listings/new" method="get">
+        <button type="submit">Lust Your place</button>
+    </form> -->
     <ul>
         <% listings.forEach(function(listing) { %>
             <li>
@@ -19,4 +13,3 @@
     </ul>
 
 </body>
-</html>
