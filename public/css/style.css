@@ -1,5 +1,12 @@
 body {
     font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container{
+    flex: 1;
 }
 
 /* Navbar Styling */
@@ -67,7 +74,7 @@ body {
 }
 
 .card-img-top {
-    border-radius: 1rem 1rem 0 0 !important; /* Round top corners */
+    border-radius: 1rem   !important; /* Round corners */
     width: 100% !important;
     height: 15rem; /* Set consistent height */
     object-fit: cover !important; /* Maintain aspect ratio */
@@ -105,4 +112,31 @@ body {
     border-color: #002f63;
     transform: scale(0.95);
     transition: transform 0.1s ease, background-color 0.1s ease;
+}
+  /* Button for new page */
+.add-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* edit button for edit page */
+.edit-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* show page */
+.show-img {
+    height: 30vh;
+}
+.btns {
+    display: flex;
+}
+
+show-card {
+    padding-left: 0;
+    padding-right: 0;
+}
+show-card :hover{
+    transform:none !important;
 }
