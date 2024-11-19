@@ -1,15 +1,17 @@
 <% layout('layouts/boilerplates') %>
 <body>
     <h2>Listing</h2>
-    <!-- <form action="/listings/new" method="get">
-        <button type="submit">Lust Your place</button>
-    </form> -->
-    <ul>
+   
+    <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
         <% listings.forEach(function(listing) { %>
-            <li>
-                <a href="/listings/<%= listing.id %>"><%= listing.title %></a>
-            </li>
+            <div class="card col">
+                <img class="card-img-top" src="<%= listing.image.url %>" alt="Listing image" style="height: 20rem;">
+                <div class="card-body">
+                  <h5 class="card-title"><%= listing.title %></h5>
+                  <p class="card-text"> &#8377;<%= listing.price.toLocaleString('en-IN') %> / Night</p>
+                  <a href='/listings/<%= listing.id %>' class="btn btn-primary">Show Details</a>
+                </div>
+            </div>
         <% }); %>
-    </ul>
-
+    </div>  
 </body>
