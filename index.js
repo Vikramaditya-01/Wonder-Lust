@@ -48,10 +48,14 @@ app.get('/listings/new', (req, res) => {
 
 // Show route
 
-app.get('/listings/:id', async (req, res) => {
-    let { id } = req.params;
-    const listings = await listing.findById(id);
-    res.render('listings/show', { listings });
+app.get('/listings/:id', async (req, res , next) => {
+    try{
+        let { id } = req.params;
+        const listings = await listing.findById(id);
+         res.render('listings/show', { listings });
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Create route
@@ -82,6 +86,10 @@ app.delete('/listings/:id', async (req, res) => {
     res.redirect('/listings');
 });
 
+// error handling middleware
+app.use((err, req, res, next) => {
+    res.send('Something went wrong');
+});
 
 // Server listening
 app.listen(8080, () => {
