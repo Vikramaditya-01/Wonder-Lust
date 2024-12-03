@@ -3,7 +3,8 @@
     <div class="col-8 offset-2">
         <h2 class="mb-4">Edit Listing</h2>
         <form method="post" action="/listings/<%= listings.id %>?_method=PUT" novalidate class="form-group needs-validation">
-            <div class="mb-3"> // This is for the title
+            <!-- This is for the title -->
+            <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input 
                     type="text" 
@@ -15,11 +16,12 @@
                     required
                 >
                 <div class="invalid-feedback">
-                    please provide a valid title.
-                 </div>
+                    Please provide a valid title.
+                </div>
             </div>
 
-            <div class="mb-3"> // This is for the description
+            <!-- This is for the description -->
+            <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea 
                     name="listing[description]" 
@@ -30,11 +32,12 @@
                     required
                 ><%= listings.description %></textarea>
                 <div class="invalid-feedback">
-                    please provide a valid description.
+                    Please provide a valid description.
                 </div>
             </div>
 
-            <div class="mb-3"> // This is for the image
+            <!-- This is for the image -->
+            <div class="mb-3">
                 <label for="image" class="form-label">Image Link</label>
                 <input 
                     type="text" 
@@ -46,12 +49,13 @@
                     required
                 >
                 <div class="invalid-feedback">
-                    please provide a valid image link.
+                    Please provide a valid image link.
                 </div>
             </div>
 
             <div class="row"> 
-                <div class="mb-3 col-md-4"> // This is for the price
+                <!-- This is for the price -->
+                <div class="mb-3 col-md-4">
                     <label for="price" class="form-label">Price</label>
                     <input 
                         type="number" 
@@ -67,7 +71,8 @@
                     </div>
                 </div>
 
-                <div class="mb-3 col-md-8"> // This is for the country
+                <!-- This is for the country -->
+                <div class="mb-3 col-md-8">
                     <label for="country" class="form-label">Country</label>
                     <input 
                         type="text" 
@@ -79,12 +84,13 @@
                         required
                     >
                     <div class="invalid-feedback">
-                        please provide a valid country.
+                        Please provide a valid country.
                     </div>
                 </div>
             </div>
 
-            <div class="mb-3"> // This is for the location
+            <!-- This is for the location -->
+            <div class="mb-3">
                 <label for="location" class="form-label">Location</label>
                 <input 
                     type="text" 
