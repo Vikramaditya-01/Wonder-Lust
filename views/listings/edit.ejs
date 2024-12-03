@@ -2,7 +2,7 @@
 <div class="row mt-3">
     <div class="col-8 offset-2">
         <h2 class="mb-4">Edit Listing</h2>
-        <form method="post" action="/listings/<%= listings.id %>?_method=PUT" class="form-group">
+        <form method="post" action="/listings/<%= listings.id %>?_method=PUT" novalidate class="form-group needs-validation">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input 
@@ -12,7 +12,11 @@
                     id="title" 
                     value="<%= listings.title %>" 
                     placeholder="enter title"
+                    required
                 >
+                <div class="invalid-feedback">
+                    please provide a valid title.
+                 </div>
             </div>
 
             <div class="mb-3">
@@ -23,7 +27,11 @@
                     class="form-control" 
                     rows="4" 
                     placeholder="Enter Description"
+                    required
                 ><%= listings.description %></textarea>
+                <div class="invalid-feedback">
+                    please provide a valid description.
+                </div>
             </div>
 
             <div class="mb-3">
@@ -35,7 +43,11 @@
                     id="image" 
                     value="<%= listings.image%>" 
                     placeholder="enter image URL/Link"
+                    required
                 >
+                <div class="invalid-feedback">
+                    please provide a valid image link.
+                </div>
             </div>
 
             <div class="row">
@@ -48,7 +60,11 @@
                         id="price" 
                         value="<%= listings.price %>" 
                         placeholder="enter price"
+                        required
                     >
+                    <div class="invalid-feedback">
+                        Please provide a valid price.
+                    </div>
                 </div>
 
                 <div class="mb-3 col-md-8">
@@ -60,7 +76,11 @@
                         id="country" 
                         value="<%= listings.country %>" 
                         placeholder="enter country"
+                        required
                     >
+                </div>
+                <div class="invalid-feedback">
+                    please provide a valid country.
                 </div>
             </div>
 
@@ -73,6 +93,7 @@
                     id="location" 
                     value="<%= listings.location %>" 
                     placeholder="enter location"
+                    required
                 >
             </div>
             <button type="submit" class="btn btn-dark edit-btn mt-3">Edit</button>
@@ -80,3 +101,4 @@
         </form>
     </div>
 </div>
+<script src="/public/js/script.js"></script>
