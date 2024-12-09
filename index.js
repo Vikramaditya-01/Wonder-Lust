@@ -18,7 +18,7 @@ app.use(methodOverride('_method'));
 app.engine('ejs', ejsMate);
 
 
-const validateListing = (req, res, next) => {
+const validateListing = (req, res, next) => {    /// middleware for Validate the listing schema using Joi
     let {error} = listingSchema.validate(req.body);
     if (error) {
         let errorMessages = error.details.map(el => el.message).join(',');
@@ -63,7 +63,7 @@ app.get('/listings/:id', wrapAsync(async (req, res , next) => {
 }));
 
 // Create route
-app.post('/listings', validateListing, wrapAsync(async (req, res) => {
+app.post('/listings', validateListing, wrapAsync(async (req, res) => {  ///use middleware to validate the listing schema
 const Newlisting = new listing(req.body.listing);
 await Newlisting.save();
 res.redirect(`/listings`);
@@ -77,7 +77,7 @@ app.get('/listings/:id/edit', wrapAsync(async (req, res) => {
 }));
 
 // Update route
-app.put('/listings/:id', validateListing, wrapAsync(async (req, res) => {
+app.put('/listings/:id', validateListing, wrapAsync(async (req, res) => {   ///use middleware to validate the listing schema
     let { id } = req.params;
     await listing.findByIdAndUpdate(id , { ...req.body.listing });
     res.redirect(`/listings`);
