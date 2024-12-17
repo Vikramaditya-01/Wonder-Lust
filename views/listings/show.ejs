@@ -1,14 +1,14 @@
 <% layout('layouts/boilerplates') %>
 <div class="row">
     <div class="col-8 offset-2 mt-3 mb-2">
-        <h3>Listing Details</h3>
+        <h2><b><%= listings.title || 'No Title Available' %></b></h2>
     </div>
 
     <div class="card col-6 offset-3 show-card">
         <img src="<%= listings.image || '/default-image.jpg' %>" class="card-img-top show-img" alt="Listing image">
         <div class="card-body">
             <p class="card-text">
-                <b><%= listings.title || 'No Title Available' %></b> <br>
+                <br>
                 <%= listings.description || 'No Description Provided' %> <br>
                 &#8377;<%= listings.price ? listings.price.toLocaleString('en-IN') : 'N/A' %> <br>
                 <%= listings.location || 'No Location Specified' %> <br>
