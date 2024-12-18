@@ -8,6 +8,7 @@ const ejsMate = require('ejs-mate');
 const wrapAsync = require('./utils/wrapAsync');
 const expressError = require('./utils/expressError');
 const { listingSchema } = require('./schema.js');
+const Review = require('./models/review.js');
 
 // Set & use engines and directorys
 app.set('view engine', 'ejs');
@@ -89,6 +90,21 @@ app.delete('/listings/:id', wrapAsync(async (req, res) => {
     await listing.findByIdAndDelete(id);
     res.redirect('/listings');
 }));
+
+// review 
+// post route
+app.post('/listings/:id/reviews', wrapAsync(async (req, res) => {
+    let foundListing = await listing.findById(req.params.id);
+    let newreview = new Review(req.body.review);
+
+    foundListing.reviews.push(newreview);
+    await newreview.save();
+    await foundListing.save();
+    console.log(newreview);
+    
+    res.send('Review Added');
+}));
+
 
 // 404 route
 app.all('*', (req, res, next) => {
