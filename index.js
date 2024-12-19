@@ -33,6 +33,9 @@ const validateReview = (req, res, next) => {    /// middleware for Validate the 
     let {error} = reviewSchema.validate(req.body);
     if (error) {
         let errorMessages = error.details.map(el => el.message).join(',');
+        console.log(error);
+        
+        
         throw new expressError(errorMessages, 400);
     } else {
         next();
@@ -68,7 +71,7 @@ app.get('/listings/new', (req, res) => {
 // Show route
 app.get('/listings/:id', wrapAsync(async (req, res , next) => {
         let { id } = req.params;
-        const listings = await listing.findById(id);
+        const listings = await listing.findById(id).populate('reviews');
         res.render('listings/show', { listings });
 }));
 
@@ -102,7 +105,7 @@ app.delete('/listings/:id', wrapAsync(async (req, res) => {
 
 // review 
 // post route
-app.post('/listings/:id/reviews', validateReview , wrapAsync(async (req, res) => {
+app.post('/listings/:id/reviews', validateReview, wrapAsync(async (req, res) => {
     let foundListing = await listing.findById(req.params.id);
     let newreview = new Review(req.body.Review);
 
@@ -112,6 +115,7 @@ app.post('/listings/:id/reviews', validateReview , wrapAsync(async (req, res) =>
     console.log(newreview);
     res.redirect(`/listings/${foundListing._id}`);
 }));
+
 
 // 404 route
 app.all('*', (req, res, next) => {

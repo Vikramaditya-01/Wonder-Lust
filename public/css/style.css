@@ -60,7 +60,7 @@ body {
 }
 
 /* Card Styling */
-.card {
+.listing-card {
     border: none !important;
     margin-bottom: 2rem;
     overflow: hidden; /* Prevent content overflow on hover */
@@ -68,7 +68,7 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
+.listing-card:hover {
     transform: scale(1.05);
     box-shadow: #fff;
 }
