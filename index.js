@@ -95,7 +95,7 @@ app.delete('/listings/:id', wrapAsync(async (req, res) => {
 // post route
 app.post('/listings/:id/reviews', wrapAsync(async (req, res) => {
     let foundListing = await listing.findById(req.params.id);
-    let newreview = new Review(req.body.review);
+    let newreview = new Review(req.body.Review);
 
     foundListing.reviews.push(newreview);
     await newreview.save();
@@ -104,7 +104,6 @@ app.post('/listings/:id/reviews', wrapAsync(async (req, res) => {
     
     res.send('Review Added');
 }));
-
 
 // 404 route
 app.all('*', (req, res, next) => {
