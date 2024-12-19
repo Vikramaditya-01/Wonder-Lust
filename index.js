@@ -7,7 +7,7 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const wrapAsync = require('./utils/wrapAsync');
 const expressError = require('./utils/expressError');
-const { listingSchema } = require('./schema.js');
+const { listingSchema , reviewSchema } = require('./schema.js');
 const Review = require('./models/review.js');
 
 // Set & use engines and directorys
@@ -29,6 +29,15 @@ const validateListing = (req, res, next) => {    /// middleware for Validate the
     }
 };
 
+const validateReview = (req, res, next) => {    /// middleware for Validate the review schema using Joi
+    let {error} = reviewSchema.validate(req.body);
+    if (error) {
+        let errorMessages = error.details.map(el => el.message).join(',');
+        throw new expressError(errorMessages, 400);
+    } else {
+        next();
+    }
+}
 
 // Database Connection
 const MONGOURL = "mongodb://127.0.0.1:27017/Wonderlust";
@@ -93,7 +102,7 @@ app.delete('/listings/:id', wrapAsync(async (req, res) => {
 
 // review 
 // post route
-app.post('/listings/:id/reviews', wrapAsync(async (req, res) => {
+app.post('/listings/:id/reviews', validateReview , wrapAsync(async (req, res) => {
     let foundListing = await listing.findById(req.params.id);
     let newreview = new Review(req.body.Review);
 
@@ -101,8 +110,7 @@ app.post('/listings/:id/reviews', wrapAsync(async (req, res) => {
     await newreview.save();
     await foundListing.save();
     console.log(newreview);
-    
-    res.send('Review Added');
+    res.redirect(`/listings/${foundListing._id}`);
 }));
 
 // 404 route
