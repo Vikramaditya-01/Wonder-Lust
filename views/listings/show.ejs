@@ -60,10 +60,12 @@
                <div class="card col-5 ms-3 mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Jhon Doe</h5>
-                        <p class="card-text">Comment: <%= review.comment %></p>
+                        <p class="card-text"><%= review.comment %></p>
                         <p class="card-text">Rating: <%= review.rating %></p>
-
                     </div>
+                    <form class="mb-3" method="post" action="/listings/<%= listings.id %>/reviews/<%= review.id %>?_method=DELETE">
+                        <button class="btn btn-sm btn-dark">Delete</button>
+                    </form>
                </div>
             <% } %>
             </div>
