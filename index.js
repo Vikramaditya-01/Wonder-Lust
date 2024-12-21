@@ -9,6 +9,10 @@ const listingRoutes = require('./routes/listing.js');
 const reviewRoutes = require('./routes/review.js');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
+const userRoutes = require('./routes/user.js');
 
 
 
@@ -39,8 +43,16 @@ const sessionOptions = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
-app.use(session(sessionOptions));
+app.use(session(sessionOptions));  // Session
 app.use(flash());
+app.use(passport.initialize());  // Passport initialize for authentication
+app.use(passport.session());     // Passport session for authentication
+
+passport.use(new LocalStrategy(User.authenticate()));  // Local strategy for authentication
+
+passport.serializeUser(User.serializeUser());  // Serialize user
+passport.deserializeUser(User.deserializeUser());  // Deserialize user
+
 
 // Root route
 app.get('/', (req, res) => {
@@ -58,6 +70,9 @@ app.use('/listings', listingRoutes);
 
 // review routes
 app.use('/listings/:id/reviews', reviewRoutes);
+
+// user routes
+app.use('/', userRoutes);
 
 // 404 route
 app.all('*', (req, res, next) => {
