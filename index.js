@@ -7,6 +7,9 @@ const ejsMate = require('ejs-mate');
 const expressError = require('./utils/expressError');
 const listingRoutes = require('./routes/listing.js');
 const reviewRoutes = require('./routes/review.js');
+const session = require('express-session');
+const flash = require('connect-flash');
+
 
 
 // Set & use engines and directorys
@@ -26,12 +29,29 @@ async function main() {
     await mongoose.connect(MONGOURL);
 }
 
-//// Routes////
+const sessionOptions = {
+    secret : 'supersecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+}
+app.use(session(sessionOptions));
+app.use(flash());
 
 // Root route
 app.get('/', (req, res) => {
     res.send('Hii I am root');
 });
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+});  
 
 // Listing routes
 app.use('/listings', listingRoutes);

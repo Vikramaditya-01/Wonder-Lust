@@ -39,6 +39,7 @@ router.get('/:id', wrapAsync(async (req, res , next) => {
 router.post('/', validateListing, wrapAsync(async (req, res) => {  ///use middleware to validate the listing schema
 const Newlisting = new listing(req.body.listing);
 await Newlisting.save();
+req.flash('success', 'Successfully made a new listing!');
 res.redirect(`/listings`);
 }));
 
