@@ -32,7 +32,7 @@ router.get('/new', isLoggedIn , (req, res) => {
 // Show route
 router.get('/:id', wrapAsync(async (req, res , next) => {
         let { id } = req.params;
-        const listings = await listing.findById(id).populate('reviews');
+        const listings = await listing.findById(id).populate('reviews').populate('owner');
         if (!listings) {
             req.flash('error', 'listing you requested for does not exist!');
             return res.redirect('/listings');
@@ -43,6 +43,7 @@ router.get('/:id', wrapAsync(async (req, res , next) => {
 // Create route
 router.post('/', isLoggedIn , validateListing, wrapAsync(async (req, res) => {  ///use middleware to validate the listing schema
 const Newlisting = new listing(req.body.listing);
+Newlisting.owner = req.user._id;
 await Newlisting.save();
 req.flash('success', 'Successfully made a new listing!');
 res.redirect(`/listings`);

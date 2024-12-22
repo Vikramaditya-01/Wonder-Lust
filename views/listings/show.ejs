@@ -7,13 +7,11 @@
     <div class="card col-6 offset-3 show-card listing-card">
         <img src="<%= listings.image || '/default-image.jpg' %>" class="card-img-top show-img" alt="Listing image">
         <div class="card-body">
-            <p class="card-text">
-                <br>
-                <%= listings.description || 'No Description Provided' %> <br>
-                &#8377;<%= listings.price ? listings.price.toLocaleString('en-IN') : 'N/A' %> <br>
-                <%= listings.location || 'No Location Specified' %> <br>
-                <%= listings.country || 'No Country Specified' %> <br>
-            </p>
+            <p class="card-text"><b><i>Owned By : <%= listings.owner.username %></i></b> <br></p>
+            <p class="card-text"><%= listings.description || 'No Description Provided' %></p>
+            <p class="card-text"></p>&#8377;<%= listings.price ? listings.price.toLocaleString('en-IN') : 'N/A' %></p>
+            <p class="card-text"></p><%= listings.location || 'No Location Specified' %></p>
+            <p class="card-text"></p><%= listings.country || 'No Country Specified' %></p>
         </div>
     </div>
 
