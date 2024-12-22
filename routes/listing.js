@@ -2,20 +2,7 @@ const express = require('express');
 const router = express.Router();
 const listing = require('../models/listing.js');
 const wrapAsync = require('../utils/wrapAsync');
-const expressError = require('../utils/expressError');
-const { listingSchema } = require('../schema.js');
-const { isLoggedIn } = require('../middleware.js');
-
-
-const validateListing = (req, res, next) => {    /// middleware for Validate the listing schema using Joi
-    let {error} = listingSchema.validate(req.body);
-    if (error) {
-        let errorMessages = error.details.map(el => el.message).join(',');
-        throw new expressError(errorMessages, 400);
-    } else {
-        next();
-    }
-};
+const { isLoggedIn , isOwner , validateListing } = require('../middleware.js');
 
 
 // index route
@@ -50,7 +37,7 @@ res.redirect(`/listings`);
 }));
 
 // Edit route
-router.get('/:id/edit', isLoggedIn , wrapAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn , isOwner , wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listings = await listing.findById(id);
     if (!listings) {
@@ -61,7 +48,7 @@ router.get('/:id/edit', isLoggedIn , wrapAsync(async (req, res) => {
 }));
 
 // Update route
-router.put('/:id', isLoggedIn ,  validateListing, wrapAsync(async (req, res) => {   ///use middleware to validate the listing schema
+router.put('/:id', isLoggedIn , isOwner ,  validateListing, wrapAsync(async (req, res) => {   ///use middleware to validate the listing schema
     let { id } = req.params;
     await listing.findByIdAndUpdate(id , { ...req.body.listing });
     req.flash('success', 'Successfully updated the listing!');
@@ -69,7 +56,7 @@ router.put('/:id', isLoggedIn ,  validateListing, wrapAsync(async (req, res) => 
 }));
 
 // Delete route
-router.delete('/:id', isLoggedIn , wrapAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn , isOwner , wrapAsync(async (req, res) => {
     let { id } = req.params;
     await listing.findByIdAndDelete(id);
     req.flash('success', "Successfully deleted the listing!");

@@ -14,14 +14,16 @@
             <p class="card-text"></p><%= listings.country || 'No Country Specified' %></p>
         </div>
     </div>
-
-    <div class="btns offset-3">
-        <a href="/listings/<%= listings.id %>/edit" class="btn btn-dark col-1 offset-2 edit-btn mb-2">Edit</a>
-        <br><br>
-        <form action="/listings/<%= listings.id %>?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-dark offset-4">Delete</button>
-        </form>
-    </div>
+    
+    <% if (currentUser && currentUser._id.equals(listings.owner._id)) { %>
+        <div class="btns offset-3">
+            <a href="/listings/<%= listings.id %>/edit" class="btn btn-dark col-1 offset-2 edit-btn mb-2">Edit</a>
+            <br><br>
+            <form action="/listings/<%= listings.id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-dark offset-4">Delete</button>
+            </form>
+        </div>
+    <% } %>
 
     <hr>
 
