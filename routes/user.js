@@ -30,4 +30,17 @@ req.flash('success', 'Welcome back to Wonder Lust');
 res.redirect('/listings');
 });
 
+
+router.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);  // Pass error to Express error handler
+        }
+        req.flash('success', 'Thank you for visiting Wonder Lust');
+        res.redirect('/listings');  // Only redirect if no error
+    });
+});
+
+
+
 module.exports = router;
