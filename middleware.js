@@ -1,4 +1,5 @@
 const Listing = require('./models/listing');
+const Review = require('./models/review');  // Import Review model
 const expressError = require('./utils/expressError');
 const { listingSchema, reviewSchema } = require('./schema.js');
 
@@ -61,3 +62,22 @@ module.exports.validateReview = (req, res, next) => {
         next();
     }
 };
+
+// Middleware to check if the current user is the author of the review
+module.exports.isReviewAuthor = async (req, res, next) => {
+    const { reviewId } = req.params;  // Get review ID from URL
+    const review = await Review.findById(reviewId);  // Query the review by ID
+
+    if (!review) {
+        req.flash('error', 'Review not found!');
+        return res.redirect('/listings');
+    }
+
+    // Check if the logged-in user is the author of the review
+    if (!review.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect(`/listings/${req.params.id}`);
+    }
+
+    next();
+}
