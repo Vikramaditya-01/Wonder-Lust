@@ -5,7 +5,7 @@
     </div>
 
     <div class="card col-6 offset-3 show-card listing-card">
-        <img src="<%= listings.image || '/default-image.jpg' %>" class="card-img-top show-img" alt="Listing image">
+        <img src="<%= listings.image.url || '/default-image.jpg' %>" class="card-img-top show-img" alt="Listing image">
         <div class="card-body">
             <p class="card-text"><b><i>Owned By : <%= listings.owner.username %></i></b> <br></p>
             <p class="card-text"><%= listings.description || 'No Description Provided' %></p>
