@@ -36,7 +36,18 @@ const listingSchema = new Schema({
     owner : {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    Geometry: {
+        type: {
+          type: String, // Don't do `{ location: { type: String } }`
+          enum: ['Point'], // 'location.type' must be 'Point'
+          required: true
+        },
+        coordinates: {
+          type: [Number],
+          required: true
+        }
+      }
 });
 
 listingSchema.post('findOneAndDelete', async function (listing) { // Middleware to delete reviews when a listing is deleted

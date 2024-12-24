@@ -1,4 +1,7 @@
 <%layout('layouts/boilerplates')%>
+<script>
+    var geoCoordinates = <%= JSON.stringify(listings.Geometry.coordinates) %>;
+</script>
 <div class="row">
     <div class="col-8 offset-3 mt-3 mb-2">
         <h2><b><%= listings.title || 'No Title Available' %></b></h2>

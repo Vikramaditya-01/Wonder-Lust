@@ -1,5 +1,4 @@
 const listing = require('../models/listing');
-
 module.exports.index = async (req, res) => {
     let listings = await listing.find({});
     res.render('listings/index', { listings });
@@ -20,12 +19,31 @@ module.exports.showListing = async (req, res , next) => {
 }
 
 module.exports.createListing = async (req, res) => { 
+    
+    const { default: fetch } = await import('node-fetch');
+    const location = req.body.listing.location;
+    const geoUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json`;
+    const geoResponse = await fetch(geoUrl);
+    const geoData = await geoResponse.json();
+    if (geoData.length > 0) {
+        const lat = geoData[0].lat;
+        const lon = geoData[0].lon;
+        const geoLocation = {
+            type: 'Point',
+            coordinates: [parseFloat(lon), parseFloat(lat)]  // Longitude, then Latitude
+        };
+        req.body.listing.Geometry = geoLocation;
+    } else {
+        console.log("Location not found.");
+    }
+
     let url = req.file.path;
     let filename = req.file.filename;
     const Newlisting = new listing(req.body.listing);
     Newlisting.owner = req.user._id;
     Newlisting.image = { url , filename };
-    await Newlisting.save();
+    Newlisting.Geometry = req.body.listing.Geometry;
+   let saveListing = await Newlisting.save();
     req.flash('success', 'Successfully made a new listing!');
     res.redirect(`/listings`);
 }

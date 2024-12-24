@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var map = L.map('map').setView([28.6139, 77.2090], 13);  //  New Delhi, Zoom Level 13 [latitude, longitude]
+    var coordinates = geoCoordinates;
+    var map = L.map('map').setView([coordinates[1], coordinates[0]], 13); // [latitude, longitude]
     
-    // Add OSM tiles
+    // Add OpenStreetMap tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
     
-    // Add a marker (optional)
-    L.marker([28.6139, 77.2090]).addTo(map)   
-      .bindPopup('<b>New Delhi</b><br>Capital of India.')
+    // Place the marker on the map using the coordinates
+    L.marker([coordinates[1], coordinates[0]]).addTo(map)
+      .bindPopup('<b>Listing Location</b><br>your Location will here.')
       .openPopup();
 });
