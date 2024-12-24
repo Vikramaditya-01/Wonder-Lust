@@ -66,6 +66,7 @@
         </form>
         <hr>
         <% } %>
+        <% if (listings.reviews.length > 0) { %>
         <p><b>All reviews</b></p>
         <ul>
             <div class="row">
@@ -85,5 +86,12 @@
             <% } %>
             </div>
         </ul>
+        <% } %>
+    </div>
+    <div class="col-8 offset-3 mt-3 mb-2" >
+        <h3> Where you will be</h3>
+        <div id="map">
+          
+        </div>
     </div>
 </div>

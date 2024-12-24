@@ -140,3 +140,9 @@ show-card {
 show-card :hover{
     transform:none !important;
 }
+#map {
+    height: 400px;
+    width: 80vh;
+    margin: 20px 0;
+    border-radius: 10px;
+}
