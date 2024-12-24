@@ -35,10 +35,15 @@
                     Please provide a valid description.
                 </div>
             </div>
+             <!-- This is for the current image -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Current Image</label>
+                <img src=" <%= originalImageUrl %> " alt="listing image" >
+            </div>
 
             <!-- This is for the image -->
             <div class="mb-3">
-                <label for="image" class="form-label">Image Link</label>
+                <label for="image" class="form-label">Upload New Image</label>
                 <input 
                     type="file" 
                     class="form-control" 
