@@ -11,6 +11,7 @@ const expressError = require('./utils/expressError');
 const listingRoutes = require('./routes/listing.js');
 const reviewRoutes = require('./routes/review.js');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -28,15 +29,30 @@ app.engine('ejs', ejsMate);
 
 
 // Database Connection
-const MONGOURL = "mongodb://127.0.0.1:27017/Wonderlust";
+const dbUrl = process.env.ATLAS_DB_URL
+
+
 main().then(() => console.log('Connected to database')).catch(err => console.error(err));
 
 async function main() {
-    await mongoose.connect(MONGOURL);
+    await mongoose.connect(dbUrl);
 }
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret : process.env.SECRET,
+    },
+    touchAfter: 24 * 3600
+});
+
+store.on('error', (err) => {
+    console.log('ERROR IN MONGO SESSION STORE!', err);
+})
+
 const sessionOptions = {
-    secret : 'supersecret',
+    store,
+    secret : process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -45,6 +61,7 @@ const sessionOptions = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
+
 app.use(session(sessionOptions));  // Session
 app.use(flash());
 app.use(passport.initialize());  // Passport initialize for authentication
