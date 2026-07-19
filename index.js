@@ -17,6 +17,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const userRoutes = require('./routes/user.js');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 
 
 // Set & use engines and directorys
@@ -26,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.engine('ejs', ejsMate);
+
+app.use(mongoSanitize());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 
 // Database Connection
@@ -57,6 +62,7 @@ const sessionOptions = {
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }

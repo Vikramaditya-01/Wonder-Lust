@@ -1,6 +1,6 @@
 <%layout('layouts/boilerplates')%>
 <script>
-    var geoCoordinates = <%= JSON.stringify(listings.Geometry.coordinates) %>;
+    var geoCoordinates = JSON.parse('<%- JSON.stringify(listings.Geometry.coordinates) %>');
 </script>
 <div class="row">
     <div class="col-8 offset-3 mt-3 mb-2">
@@ -93,7 +93,7 @@
     </div>
     <div class="col-8 offset-3 mt-3 mb-2" >
         <h3> Where you will be</h3>
-        <div id="map">
+        <div id="map" style="height: 400px; width: 100%; border-radius: 1rem;">
           
         </div>
     </div>
